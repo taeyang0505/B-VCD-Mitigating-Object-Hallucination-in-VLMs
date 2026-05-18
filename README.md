@@ -26,23 +26,30 @@ The experimental pipeline is strictly modularized into sequential Jupyter Notebo
 
 The experimental pipeline is strictly modularized into sequential Jupyter Notebooks and Python source modules:
 
+## 📂 Repository Structure
+
+The experimental pipeline is strictly modularized into sequential Jupyter Notebooks and Python source modules:
+
 ```text
 ├── Data/
-│   └── VizWiz_val/                   # VizWiz-VQA Validation Dataset (Images & Annotations)
+│   ├── annotations/                  # Dataset annotations (e.g., val.json)
+│   └── VizWiz_val/
+│       └── val/                      # VizWiz-VQA Validation Dataset (Image files)
+├── notebooks/                        # Sequential Jupyter Notebooks for the experiment
+│   ├── 01_EDA_VizWiz.ipynb           # Exploratory Data Analysis & Stratified Sampling logic
+│   ├── 02_Baseline_Inference.ipynb   # Vanilla LLaVA-1.5 baseline response generation
+│   ├── 03_BVCD_Experiment.ipynb      # Implementation of B-VCD degradation & Candidate generation
+│   ├── 04_ReRanking_Pipeline.ipynb   # Gemini-based LLM-as-a-Judge API calling & scoring
+│   ├── 05_Result_Analysis.ipynb      # Quantitative evaluation (Phase 1 results & visualizations)
+│   ├── 06_Hyperparamter_Tuning.ipynb # 3x3 Grid Search loops over M_blur and Sigma_read
+│   ├── 07_GridSearch_Analysis.ipynb  # Global Optimum extraction and Heatmap generation
+│   └── 08_Qualitative_Analysis.ipynb # Extraction of Top 3 dramatic hallucination defense cases
 ├── Results/                          # JSON output logs, cached logits, and evaluation results
 ├── Src/                              # Custom Python modules for core operations
 │   ├── dataset.py                    # Dataset loading, preprocessing, and Base64 encoding
 │   ├── pipeline.py                   # Main pipeline orchestration
 │   ├── utils.py                      # Helper utilities and visualization tools
 │   └── vcd_decoding.py               # B-VCD degradation and decoding logic
-├── 01_EDA_VizWiz.ipynb               # Exploratory Data Analysis & Stratified Sampling logic
-├── 02_Baseline_Inference.ipynb       # Vanilla LLaVA-1.5 baseline response generation
-├── 03_BVCD_Experiment.ipynb          # Implementation of B-VCD degradation & Candidate generation
-├── 04_ReRanking_Pipeline.ipynb       # Gemini-based LLM-as-a-Judge API calling & scoring
-├── 05_Result_Analysis.ipynb          # Quantitative evaluation (Phase 1 results & visualizations)
-├── 06_Hyperparamter_Tuning.ipynb     # 3x3 Grid Search loops over M_blur and Sigma_read
-├── 07_GridSearch_Analysis.ipynb      # Global Optimum extraction and Heatmap generation
-├── 08_Qualitative_Analysis.ipynb     # Extraction of Top 3 dramatic hallucination defense cases
 ├── B-VCD_Term_Project_Report.pdf     # Term Project Final Report and Analysis
 ├── requirements.txt                  # Python dependencies
 └── README.md
