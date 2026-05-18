@@ -59,6 +59,5 @@ The experimental pipeline is strictly modularized into sequential Jupyter Notebo
 ├── B-VCD_Term_Project_Report.pdf     # Term Project Final Report and Analysis
 ├── requirements.txt                  # Python dependencies
 └── README.md
-'''
 
 
