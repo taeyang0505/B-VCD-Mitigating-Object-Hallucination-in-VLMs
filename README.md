@@ -41,7 +41,7 @@ The experimental pipeline is strictly modularized into sequential Jupyter Notebo
 ├── B-VCD_Term_Project_Report.pdf     # Term Project Final Report and Analysis
 ├── requirements.txt                  # Python dependencies
 └── README.md
-
+'''
 
 📊 Main ResultsB-VCD achieved a Global Optimum at $M_{blur} = 30$ and $\sigma_{read} = 2.5$ on the stratified VizWiz validation set.
 
