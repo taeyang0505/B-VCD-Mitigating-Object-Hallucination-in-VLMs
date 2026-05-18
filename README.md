@@ -16,18 +16,6 @@ This project introduces **B-VCD**, a training-free inference-stage defense mecha
 
 ## 📂 Repository Structure
 
-The experimental pipeline is strictly modularized into sequential Jupyter Notebooks:
-
-## 📂 Repository Structure
-
-The experimental pipeline is strictly modularized into sequential Jupyter Notebooks and Python source modules:
-
-## 📂 Repository Structure
-
-The experimental pipeline is strictly modularized into sequential Jupyter Notebooks and Python source modules:
-
-## 📂 Repository Structure
-
 The experimental pipeline is strictly modularized into sequential Jupyter Notebooks and Python source modules:
 
 ```text
@@ -53,3 +41,23 @@ The experimental pipeline is strictly modularized into sequential Jupyter Notebo
 ├── B-VCD_Term_Project_Report.pdf     # Term Project Final Report and Analysis
 ├── requirements.txt                  # Python dependencies
 └── README.md
+
+
+📊 Main ResultsB-VCD achieved a Global Optimum at $M_{blur} = 30$ and $\sigma_{read} = 2.5$ on the stratified VizWiz validation set.
+
+Method,Blur Kernel,Noise Type,Avg Score (out of 5),Win Rate vs Baseline
+Baseline (Vanilla LLaVA),None,None,2.35,-
+Comparison (Original VCD),None,Gaussian,3.05,65.4%
+Ours (B-VCD Optima),30,Poisson-Gaussian,3.33,69.5%
+
+📚 References & Acknowledgements
+This project was conducted as a Term Project for the Machine Learning course at Inha University (Department of Artificial Intelligence).
+
+VCD: Leng, S., et al. "Mitigating Object Hallucinations in Large Vision-Language Models through Visual Contrastive Decoding." CVPR 2024. GitHub
+
+LLaVA: Liu, H., et al. "Improved Baselines with Visual Instruction Tuning." GitHub
+
+VizWiz: Gurari, D., et al. "VizWiz Grand Challenge: Answering Visual Questions from Blind People." CVPR 2018.
+
+
+
