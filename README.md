@@ -14,6 +14,24 @@ This project introduces **B-VCD**, a training-free inference-stage defense mecha
 - **Automated LLM-as-a-Judge Pipeline:** Utilizes `Gemini 2.5 Flash` to strictly evaluate visual evidentialism and conservativeness.
 - **System-Engineered for Scale:** Features Asynchronous Parallel Processing (`ThreadPoolExecutor`), Logit Caching, and Fault-tolerant Regex Parsing to optimize compute time and API costs by over 60%.
 
+
+📊 Main ResultsB-VCD achieved a Global Optimum at $M_{blur} = 30$ and $\sigma_{read} = 2.5$ on the stratified VizWiz validation set.
+
+Method,Blur Kernel,Noise Type,Avg Score (out of 5),Win Rate vs Baseline
+Baseline (Vanilla LLaVA),None,None,2.35,-
+Comparison (Original VCD),None,Gaussian,3.05,65.4%
+Ours (B-VCD Optima),30,Poisson-Gaussian,3.33,69.5%
+
+📚 References & Acknowledgements
+This project was conducted as a Term Project for the Machine Learning course at Inha University (Department of Artificial Intelligence).
+
+VCD: Leng, S., et al. "Mitigating Object Hallucinations in Large Vision-Language Models through Visual Contrastive Decoding." CVPR 2024. GitHub
+
+LLaVA: Liu, H., et al. "Improved Baselines with Visual Instruction Tuning." GitHub
+
+VizWiz: Gurari, D., et al. "VizWiz Grand Challenge: Answering Visual Questions from Blind People." CVPR 2018.
+
+
 ## 📂 Repository Structure
 
 The experimental pipeline is strictly modularized into sequential Jupyter Notebooks and Python source modules:
@@ -42,22 +60,5 @@ The experimental pipeline is strictly modularized into sequential Jupyter Notebo
 ├── requirements.txt                  # Python dependencies
 └── README.md
 '''
-
-📊 Main ResultsB-VCD achieved a Global Optimum at $M_{blur} = 30$ and $\sigma_{read} = 2.5$ on the stratified VizWiz validation set.
-
-Method,Blur Kernel,Noise Type,Avg Score (out of 5),Win Rate vs Baseline
-Baseline (Vanilla LLaVA),None,None,2.35,-
-Comparison (Original VCD),None,Gaussian,3.05,65.4%
-Ours (B-VCD Optima),30,Poisson-Gaussian,3.33,69.5%
-
-📚 References & Acknowledgements
-This project was conducted as a Term Project for the Machine Learning course at Inha University (Department of Artificial Intelligence).
-
-VCD: Leng, S., et al. "Mitigating Object Hallucinations in Large Vision-Language Models through Visual Contrastive Decoding." CVPR 2024. GitHub
-
-LLaVA: Liu, H., et al. "Improved Baselines with Visual Instruction Tuning." GitHub
-
-VizWiz: Gurari, D., et al. "VizWiz Grand Challenge: Answering Visual Questions from Blind People." CVPR 2018.
-
 
 
