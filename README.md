@@ -49,6 +49,22 @@ B-VCD achieved a **Global Optimum** at **$M_{blur} = 30$** and **$\sigma_{read} 
 
 *Note: B-VCD successfully eliminated critical failure cases (0-point responses) and increased the frequency of safety avoidance keywords (e.g., "unclear", "cannot") by 1.5 times compared to the baseline, proving its reliability in high-risk scenarios.*
 
+### 1. Phase 1: Initial Exploratory Experiment
+To understand the baseline hallucination control performance of B-VCD, we conducted an initial evaluation on the full VizWiz validation set.
+
+<p align="center">
+  <img src="Results/Phase1_Initial_Evaluation.png" alt="Phase 1 Results" width="90%">
+</p>
+
+*As shown above, B-VCD effectively suppressed linguistic bias, stabilizing the score distribution by structurally eliminating critical failure cases (0-point responses). Furthermore, it increased the frequency of safety avoidance keywords (e.g., "unclear", "cannot") by 1.5 times compared to the baseline, proving its practical safety.*
+
+### 2. Phase 2: Hyperparameter Optimization via Grid Search
+To precisely tune the trade-off between visual degradation and hallucination suppression, we performed a 3x3 Grid Search on a stratified validation set.
+
+<p align="center">
+  <img src="Results/Phase 2_Hyperparameter_Optimization _Experiment.png" alt="Grid Search Heatmap" width="90%">
+</p>
+
 ---
 
 ## 📂 Repository Structure
