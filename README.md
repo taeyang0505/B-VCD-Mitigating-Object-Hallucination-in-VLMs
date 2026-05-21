@@ -39,16 +39,6 @@ By subtracting the "biased control logits" (generated from this severely degrade
 
 ## 📊 Main Results
 
-B-VCD achieved a **Global Optimum** at **$M_{blur} = 30$** and **$\sigma_{read} = 2.5$** on the stratified VizWiz validation set (Hold-out 100 samples).
-
-| Method | Blur Kernel | Noise Type | Avg Score (out of 5) | Win Rate vs Baseline |
-| :--- | :---: | :---: | :---: | :---: |
-| Baseline (Vanilla LLaVA) | None | None | 2.35 | - |
-| Comparison (Original VCD) | None | Gaussian | 3.05 | 65.4% |
-| **Ours (B-VCD Optima)** | **30** | **Poisson-Gaussian** | **3.33** | **69.5%** |
-
-*Note: B-VCD successfully eliminated critical failure cases (0-point responses) and increased the frequency of safety avoidance keywords (e.g., "unclear", "cannot") by 1.5 times compared to the baseline, proving its reliability in high-risk scenarios.*
-
 ### 1. Phase 1: Initial Exploratory Experiment
 To understand the baseline hallucination control performance of B-VCD, we conducted an initial evaluation on the full VizWiz validation set.
 
@@ -64,6 +54,17 @@ To precisely tune the trade-off between visual degradation and hallucination sup
 <p align="center">
   <img src="Results/Phase 2_Hyperparameter_Optimization _Experiment.png" alt="Grid Search Heatmap" width="90%">
 </p>
+
+### 3. Final Performance at Global Optimum
+Through the optimization process, B-VCD achieved a **Global Optimum** at **$M_{blur} = 30$** and **$\sigma_{read} = 2.5$**. 
+
+| Method | Blur Kernel | Noise Type | Avg Score (out of 5) | Win Rate vs Baseline |
+| :--- | :---: | :---: | :---: | :---: |
+| Baseline (Vanilla LLaVA) | None | None | 2.35 | - |
+| Comparison (Original VCD) | None | Gaussian | 3.05 | 65.4% |
+| **Ours (B-VCD Optima)** | **30** | **Poisson-Gaussian** | **3.33** | **69.5%** |
+
+*Note: The optimized B-VCD successfully eliminated critical failure cases (0-point responses) and increased the frequency of safety avoidance keywords by 1.5 times compared to the baseline, proving its robust reliability in high-risk scenarios.*
 
 ---
 
