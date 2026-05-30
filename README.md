@@ -104,12 +104,3 @@ When intense physical corruption is applied to images that already suffer from e
 
 ---
 
-## 🚀 Getting Started
-
-### 1. Environment Setup
-To reproduce this project and ensure the deterministic execution of the automated evaluation pipeline, please strictly follow the pinned dependency versions to resolve `protobuf` and `numpy` conflicts.
-
-```bash
-git clone [https://github.com/taeyang0505/B-VCD-Mitigating-Object-Hallucination-in-VLMs.git](https://github.com/taeyang0505/B-VCD-Mitigating-Object-Hallucination-in-VLMs.git)
-cd B-VCD-Mitigating-Object-Hallucination-in-VLMs
-pip install -r requirements.txt
