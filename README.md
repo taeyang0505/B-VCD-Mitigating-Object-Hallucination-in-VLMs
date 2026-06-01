@@ -104,3 +104,10 @@ When intense physical corruption is applied to images that already suffer from e
 
 ---
 
+## Conclusion
+This project successfully implemented and evaluated the Baseline Visual Contrastive Decoding (B-VCD) to mitigate object hallucination in Vision-Language Models. By contrasting the output logits of the original image against a noise-injected distorted image, the LLaVA model effectively suppresses its reliance on statistical language priors. Experimental results on the VizWiz dataset demonstrate that this training-free decoding strategy significantly improves visual grounding and reduces hallucinated objects in generated responses.
+
+## Limitations
+- **Inference Overhead:** The VCD methodology inherently requires dual forward passes (for both the clean and distorted images) at each decoding step. This practically doubles the computational cost and increases inference latency compared to standard decoding.
+- **Hyperparameter Sensitivity:** The effectiveness of hallucination mitigation is highly sensitive to the visual distortion settings, specifically the Gaussian noise variance. Suboptimal noise injection can inadvertently degrade the model's fundamental visual perception capabilities.
+- **Local Inference Constraints:** Running the model locally via Ollama restricts the ability to leverage large-scale batch processing. Consequently, evaluating the entire dataset introduces significant time bottlenecks in single-GPU or local hardware environments.
