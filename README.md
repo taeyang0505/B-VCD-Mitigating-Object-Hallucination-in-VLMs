@@ -9,14 +9,14 @@
 > *Term Project for Artificial Intelligence, Inha University*  
 > *Author: Taeyang Hong*
 
-## 📖 Overview
+## Overview
 Large Vision-Language Models (VLMs) like LLaVA-1.5 exhibit a critical flaw known as **Object Hallucination**, confidently generating plausible but incorrect text when visual evidence is uncertain. In high-risk domains like assistive technologies for the **Blind and Low Vision (BLV)** community, these confident errors pose severe life-threatening hazards.
 
 This repository contains the official implementation of **Blurred-Visual Contrastive Decoding (B-VCD)**, a training-free inference-stage defense mechanism that mathematically forces the VLM to rely strictly on verifiable visual evidence, maximizing operational safety.
 
 ---
 
-## 💡 Background & Motivation
+## Background & Motivation
 
 ### The Trap of "Language Priors"
 When faced with ambiguous, low-light, or corrupted visual stimuli, VLMs tend to exploit their internal statistical language priors as a safety net. Instead of analyzing the uncertain visual evidence, they "guess" the answer based on textual context, fabricating non-existent objects.
@@ -28,7 +28,7 @@ The original **Visual Contrastive Decoding (VCD)** method attempts to mitigate t
 
 ---
 
-## ⚙️ Methodology & Formulation
+## Methodology & Formulation
 
 To mirror actual physical CMOS sensor degradation under severe BLV conditions, B-VCD is modeled as follows:
 
@@ -47,7 +47,7 @@ To prevent the naive penalty from accidentally suppressing valid linguistic gram
 
 ---
 
-## 🧪 Experimental Setup
+## Experimental Setup
 
 ### 1. Baselines & Candidates
 We selected **LLaVA-1.5** as our backbone because its powerful language generation capability paradoxically makes it highly susceptible to the "Language Prior" phenomenon. We established a 3-way comparative design:
@@ -66,7 +66,7 @@ Traditional exact-match metrics (POPE) fail to capture contextual hallucinations
 
 ---
 
-## 📊 Quantitative Results (Global Optimum)
+## Quantitative Results (Global Optimum)
 
 Through a $3 \times 3$ stratified grid search on our validation subset, we derived the **Global Optimum parameters**: `max_blur = 30`, `read_noise_std = 2.5`.
 
@@ -84,9 +84,9 @@ Through a $3 \times 3$ stratified grid search on our validation subset, we deriv
 
 ---
 
-## 🔍 Qualitative Case Studies
+## Qualitative Case Studies
 
-### ✅ Success Case: Suppressing Ungrounded Conjectures
+### Success Case: Suppressing Ungrounded Conjectures
 When faced with an illegible, blurry restaurant menu:
 - **Baseline (0 pts):** Succumbs to language priors, hallucinating specific dishes, Spanish translations, and fake prices.
 - **B-VCD (5 pts):** Accurately identifies the object but conservatively states: *"The text is not clear enough to read,"* maximizing operational safety for BLV users.
@@ -95,7 +95,7 @@ When faced with an illegible, blurry restaurant menu:
   <img src="assets/success_menu.png" alt="Success Case: Menu" width="45%"> 
 </p>
 
-### ⚠️ Failure Mode: Cognitive Loss via Over-corruption
+### Failure Mode: Cognitive Loss via Over-corruption
 When intense physical corruption is applied to images that already suffer from extreme low contrast, essential visual cues are entirely obliterated. Deprived of visual anchors, the model ironically regresses into hallucinating hyper-specific details (e.g., classifying a white blob as "Male/Female Diapers") to compensate for the cognitive loss. This trade-off highlights the necessity for an **Image Quality-Based Adaptive Controller** in future iterations.
 
 <p align="center">
