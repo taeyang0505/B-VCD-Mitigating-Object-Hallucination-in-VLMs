@@ -34,12 +34,16 @@ To mirror actual physical CMOS sensor degradation under severe BLV conditions, B
 
 ### 1. Distorted Control Generation
 1. **Motion Blur Convolution:** We first wipe out macro-structures and smudge boundaries using a directional motion blur kernel $K^\theta$ with maximum blur intensity $M_{blur}$.
+
    $$x_{blur} = x_v * K^\theta(M_{blur})$$
+
 2. **Poisson-Gaussian Noise Modeling:** We then simulate physical Photon Shot Noise ($\mathcal{P}$) and Electronic Read Noise ($\mathcal{N}$) to create the severely degraded control image.
+
    $$x'_v = \frac{\mathcal{P}(\gamma \cdot x_{blur})}{\gamma} + \mathcal{N}(0, \sigma^2_{read})$$
 
 ### 2. Contrastive Decoding Objective
 We extract the original logits ($\mathcal{L}_{orig}$) and the purely biased logits from the degraded control image ($\mathcal{L}_{distort}$). B-VCD mathematically penalizes the linguistic bias:
+
 $$\mathcal{L}_{B-VCD}(y_t) = (1+\alpha) \cdot \mathcal{L}_{orig}(y_t) - \alpha \cdot \mathcal{L}_{distort}(y_t)$$
 
 ### 3. Adaptive Plausibility Constraints (APC)
