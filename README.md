@@ -16,7 +16,7 @@ This repository contains the official implementation of **Blurred-Visual Contras
 
 ---
 
-## Background & Motivation
+## Theoretical Background & Motivation
 
 ### The Trap of "Language Priors"
 When faced with ambiguous, low-light, or corrupted visual stimuli, VLMs tend to exploit their internal statistical language priors as a safety net. Instead of analyzing the uncertain visual evidence, they "guess" the answer based on textual context, fabricating non-existent objects.
@@ -28,23 +28,30 @@ The original **Visual Contrastive Decoding (VCD)** method attempts to mitigate t
 
 ---
 
-## Methodology & Formulation
+## Methodology & Mathematical Formulation
 
 To mirror actual physical CMOS sensor degradation under severe BLV conditions, B-VCD is modeled as follows:
 
 ### 1. Distorted Control Generation
-1. **Motion Blur Convolution:** We first wipe out macro-structures and smudge boundaries using a directional motion blur kernel $K^\theta$ with maximum blur intensity $M_{blur}$.
 
-   $$x_{blur} = x_v * K^\theta(M_{blur})$$
+**A. Motion Blur Convolution:** We first wipe out macro-structures and smudge boundaries using a directional motion blur kernel $K^\theta$ with maximum blur intensity $M_{blur}$.
 
-2. **Poisson-Gaussian Noise Modeling:** We then simulate physical Photon Shot Noise ($\mathcal{P}$) and Electronic Read Noise ($\mathcal{N}$) to create the severely degraded control image.
+$$
+x_{blur} = x_v * K^\theta(M_{blur})
+$$
 
-   $$x'_v = \frac{\mathcal{P}(\gamma \cdot x_{blur})}{\gamma} + \mathcal{N}(0, \sigma^2_{read})$$
+**B. Poisson-Gaussian Noise Modeling:** We then simulate physical Photon Shot Noise ($\mathcal{P}$) and Electronic Read Noise ($\mathcal{N}$) to create the severely degraded control image.
+
+$$
+x'_{v} = \frac{\mathcal{P}(\gamma \cdot x_{blur})}{\gamma} + \mathcal{N}(0, \sigma^2_{read})
+$$
 
 ### 2. Contrastive Decoding Objective
 We extract the original logits ($\mathcal{L}_{orig}$) and the purely biased logits from the degraded control image ($\mathcal{L}_{distort}$). B-VCD mathematically penalizes the linguistic bias:
 
-$$\mathcal{L}_{B-VCD}(y_t) = (1+\alpha) \cdot \mathcal{L}_{orig}(y_t) - \alpha \cdot \mathcal{L}_{distort}(y_t)$$
+$$
+\mathcal{L}_{B-VCD}(y_t) = (1+\alpha) \cdot \mathcal{L}_{orig}(y_t) - \alpha \cdot \mathcal{L}_{distort}(y_t)
+$$
 
 ### 3. Adaptive Plausibility Constraints (APC)
 To prevent the naive penalty from accidentally suppressing valid linguistic grammar, we implement APC. It dynamically restricts the token candidate pool based on the original model's confidence, ensuring the model maintains core linguistic integrity while safely outputting fallback keywords.
@@ -67,6 +74,15 @@ Traditional exact-match metrics (POPE) fail to capture contextual hallucinations
 * **Average Score (0-5 Scale):** Heavily penalizes unverified claims/hallucinations (0-1 pts) and rewards accurate, conservative, verifiable facts (4-5 pts).
 * **Safety Index:** Measures the frequency of safe refusal keywords (e.g., *"cannot"*, *"unclear"*).
 * **Relative Win Rate:** 1v1 matchups against the baseline models.
+
+### 4. Experimental Pipeline & Execution Flow
+Our research framework is structurally divided into a rigorous 5-step pipeline, documented in our execution notebooks:
+
+1. **`02_Baseline_Inference`**: Establishes the performance baseline by evaluating vanilla LLaVA-1.5 on the VizWiz-VQA dataset (4,319 images taken by blind individuals).
+2. **`03_BVCD_Experiment`**: Implements the core B-VCD contrastive decoding algorithm, generating structurally penalized text outputs.
+3. **`04_ReRanking_Pipeline`**: Enhances output robustness by generating multiple decoding candidates and utilizing an LLM-based re-ranking pipeline to filter the most visually grounded answer.
+4. **`06 & 07 Hyperparameter Tuning & Grid Search`**: Conducts a massive 3x3 stratified grid search ($Blur \in [10,20,30]$, $Noise \in [2.5, 5.0, 7.5]$) to algorithmically locate the **Global Optimum**, proving systemic robustness.
+5. **`05 & 08 Results & Qualitative Analysis`**: Replaces traditional POPE metrics with a strict, deterministic **LLM-as-a-Judge (Gemini 2.5 Flash)** evaluation system to accurately measure contextual hallucination drops and safety index improvements.
 
 ---
 
@@ -108,8 +124,8 @@ When intense physical corruption is applied to images that already suffer from e
 
 ---
 
-## Conclusion
-This project successfully implemented and evaluated the Baseline Visual Contrastive Decoding (B-VCD) to mitigate object hallucination in Vision-Language Models. By contrasting the output logits of the original image against a noise-injected distorted image, the LLaVA model effectively suppresses its reliance on statistical language priors. Experimental results on the VizWiz dataset demonstrate that this training-free decoding strategy significantly improves visual grounding and reduces hallucinated objects in generated responses.
+## 🎯 Conclusion
+This project successfully implemented and evaluated B-VCD to mitigate object hallucination in Vision-Language Models. By contrasting the output logits of the original image against a physically-modeled distorted image, LLaVA effectively suppresses its reliance on statistical language priors. Experimental results on the VizWiz dataset demonstrate that this training-free decoding strategy significantly improves visual grounding and reduces hallucinated objects in generated responses.
 
 ## Limitations
 - **Inference Overhead:** The VCD methodology inherently requires dual forward passes (for both the clean and distorted images) at each decoding step. This practically doubles the computational cost and increases inference latency compared to standard decoding.
